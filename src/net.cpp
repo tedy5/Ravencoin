@@ -1419,16 +1419,6 @@ void CConnman::ThreadSocketHandler()
                     LogPrintf("socket sending timeout: %is\n", nTime - pnode->nLastSend);
                     pnode->fDisconnect = true;
                 }
-                else if (nTime - pnode->nLastRecv > (pnode->nVersion > BIP0031_VERSION ? TIMEOUT_INTERVAL : 90*60))
-                {
-                    LogPrintf("socket receive timeout: %is\n", nTime - pnode->nLastRecv);
-                    pnode->fDisconnect = true;
-                }
-                else if (pnode->nPingNonceSent && pnode->nPingUsecStart + TIMEOUT_INTERVAL * 1000000 < GetTimeMicros())
-                {
-                    LogPrintf("ping timeout: %fs\n", 0.000001 * (GetTimeMicros() - pnode->nPingUsecStart));
-                    pnode->fDisconnect = true;
-                }
                 else if (!pnode->fSuccessfullyConnected)
                 {
                     LogPrintf("version handshake timeout from %d\n", pnode->GetId());
