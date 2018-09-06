@@ -1414,11 +1414,6 @@ void CConnman::ThreadSocketHandler()
                     LogPrint(BCLog::NET, "socket no message in first 60 seconds, %d %d from %d\n", pnode->nLastRecv != 0, pnode->nLastSend != 0, pnode->GetId());
                     pnode->fDisconnect = true;
                 }
-                else if (nTime - pnode->nLastSend > TIMEOUT_INTERVAL)
-                {
-                    LogPrintf("socket sending timeout: %is\n", nTime - pnode->nLastSend);
-                    pnode->fDisconnect = true;
-                }
                 else if (!pnode->fSuccessfullyConnected)
                 {
                     LogPrintf("version handshake timeout from %d\n", pnode->GetId());
